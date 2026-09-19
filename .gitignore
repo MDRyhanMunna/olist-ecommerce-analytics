@@ -1,0 +1,17 @@
+# Local datasets and generated exports
+data/raw/
+data/processed/
+# Python environments and caches
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+# Local configuration and operating-system files
+.env
+.DS_Store
+Thumbs.db
+# Temporary files
+*.tmp
+*.bak
+~$*
