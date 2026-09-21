@@ -1,6 +1,8 @@
 # Data setup and exports
 
-Obtain the **Brazilian E-Commerce Public Dataset by Olist** from its Olist dataset page on Kaggle. Follow the source's current access and license terms; data are not redistributed in this repository.
+Obtain the **[Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce)** from Kaggle. Follow the source's current access and license terms.
+
+**The raw Olist CSV files are not redistributed in this repository.** The included Power BI `.pbix` report contains an embedded data model derived from the Olist dataset. Derived/embedded data are therefore present in the report even though the raw CSV files are excluded.
 
 Place these files together in the folder referenced by the notebook's `base_path` variable. If you follow a repository-style layout, `data/raw/` is recommended:
 
@@ -27,7 +29,7 @@ For `product_weight_g`, source CSV validation shows **2 missing values and 4 sou
 
 ## Notebook exports
 
-Running the notebook creates the folder specified by 'processed_path' and writes:
+Running the notebook creates the folder specified by `processed_path` and writes:
 
 - `monthly_sales.csv`
 - `category_sales.csv`
@@ -42,12 +44,12 @@ Running the notebook creates the folder specified by 'processed_path' and writes
 
 `powerbi_orders` contains one row per delivered order (96,478); `powerbi_sales` contains delivered item rows (110,197); `powerbi_reviews` contains delivered-order review rows (96,361). Keep these different levels of detail separate to avoid multiplying revenue or changing review weights.
 
-Category analysis first deduplicates `order_id + category`, then joins review rows. `total_reviews`, average rating, and positive/negative percentages are all calculated from those resulting review rows, matching the final SQL logic.
+Category analysis first deduplicates `order_id + category`, then joins review rows. `total_reviews` counts the resulting review rows, not distinct review IDs. Average rating and positive/negative percentages are also calculated from those review rows, matching the final SQL logic.
 
 The notebook uses editable `base_path` and `processed_path` variables rather than environment-variable overrides. In Colab, mount Google Drive and edit those two path variables so they point to your own project folders before running the remaining cells.
 
 ## Refresh and validation
 
-Update the Power BI source paths to your generated files before refreshing. Check all required queries, relationships, and slicer interactions. Validate the headline values against the main README. On-time delivery is 89,936 / 96,470 = 93.23%, excluding eight delivered orders with missing actual delivery dates.
+Update the Power BI source paths to your generated files before refreshing. Check all required queries, relationships, and slicer interactions. Validate the headline values against the main README. On-time delivery is **93.23%**, calculated as **89,936 on-time orders / 96,470 classified delivered orders**, excluding eight delivered orders with missing actual delivery dates.
 
-Raw and processed data directories are ignored by Git. This file keeps data setup instructions visible without bundling datasets.
+Raw and processed data directories are ignored by Git. These exclusions apply to the standalone CSV files; they do not remove the derived/embedded data contained in the included Power BI `.pbix` report.
